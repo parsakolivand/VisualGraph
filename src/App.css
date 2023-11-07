@@ -36,3 +36,244 @@
     transform: rotate(360deg);
   }
 }
+/* App.css */
+.dashboard header {
+  background-color: #001f3f; /* Navy blue */
+  color: white;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard nav a {
+  color: white;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+
+.dashboard nav a.active {
+  color: #ff851b; /* Bright orange */
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1rem;
+  gap: 20px;
+
+}
+
+.teachers-list,
+.courses-list {
+  /* ... other styles ... */
+  height: 100px;
+  max-height: 100px; /* Adjust the height as needed */
+  overflow-y: auto; /* Adds a scrollbar if content overflows */
+  margin-bottom: 20px; /* Space below the section */
+  background-color: #e0e0e0; /* Medium grey background */
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px;
+}
+
+.teachers-list ul,
+.courses-list ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.teachers-list li,
+.courses-list li {
+  padding: 5px 0; /* Padding for each list item */
+  border-bottom: 1px solid #ddd; /* Optional: adds a separator between items */
+}
+
+/* Last child shouldn't have a border bottom */
+.teachers-list li:last-child,
+.courses-list li:last-child {
+  border-bottom: none;
+}
+
+
+.char-list {
+  margin-top: 20px; /* Adjust spacing as needed */
+}
+
+.chars .char {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .teachers-list,
+  .courses-list {
+    width: 100%; /* Full width on smaller screens */
+  }
+  .section.rectangle {
+    width: 100%; /* Full width on smaller screens */
+    margin-bottom: 20px; /* Space between sections */
+  }
+}
+
+/* Styles for the new content sections with rectangles */
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust the gap as needed */
+  padding: 1rem;
+}
+.section.rectangle {
+  border: 1px solid #dbd9d9; /* Light grey border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 20px;
+  width: 650px; /* Fixed width */
+  height: 200px; /* Fixed height */
+  cursor: pointer; /* Indicates the section is clickable */
+  background-color: #d1cfcf; /* Adjusted to a darker shade of grey */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds shadow for depth */
+  transition: box-shadow 0.3s ease-in-out;
+  display: flex; /* Added to create a flex container */
+  flex-direction: column; /* Stack children vertically */
+}
+
+
+.section.rectangle:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .section.rectangle {
+    width: 100%; /* Full width on smaller screens */
+    height: auto; /* Height can adjust to content on smaller screens */
+
+    margin-bottom: 20px; /* Space between sections */
+  }
+  .stats-container {
+    flex-direction: column;
+  }
+
+  .stat-box {
+    margin-bottom: 10px;
+  }
+}
+
+.scrollable-content {
+  flex-grow: 1; /* Allows the content to fill the space */
+  overflow-y: auto; /* Adds a scrollbar if content overflows */
+  margin-top: 10px; /* Adjust as needed */
+}
+
+/* Ensure the list items do not have any additional margin or padding that would cause overflow */
+.scrollable-content ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.scrollable-content li {
+  padding: 5px 0; /* Padding for each list item */
+  border-bottom: 1px solid #ddd; /* Optional: adds a separator between items */
+}
+
+.scrollable-content li:last-child {
+  border-bottom: none;
+}
+.section.rectangle select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.graph-content {
+  height: 150px; /* Set a fixed height for the graph content area */
+  border-top: 1px solid #ccc;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.summary-section {
+  background-color: #d1cfcf; /* Grey background to match theme */
+  color: rgb(0, 0, 0); /* White text */
+  align-items: center; /* Center items horizontally */
+  justify-content: space-between; /* Distribute space between items */
+  padding: 20px; /* Add padding */
+  width: calc(33% - 20px); /* Calculate width for 3 items */
+  margin-bottom: 20px; /* Space between sections */
+}
+
+.summary-section img {
+  width: 50px; /* Set a fixed width for icons */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 10px; /* Space below the icon */
+}
+.stats-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px; /* Adjust as needed */
+}
+
+.stat-box {
+  flex: 1; /* Each box will take up half the container width */
+  display: flex;
+  align-items: center; /* Align items vertically */
+  padding: 20px;
+  background-color: #d1cfcf; /* Grey background */
+  border: 3px solid #dbd9d9; /* Light grey border */
+  border-radius: 10px;
+  margin-right: 20px; /* Space between the stat boxes */
+}
+
+.stat-box:last-child {
+  margin-right: 0; /* Removes margin from the last stat box */
+}
+
+.stat-icon {
+  width: 170px; /* Adjust as needed */
+  height: 50px; /* Adjust as needed */
+  margin-right: 10px; /* Space after icon */
+}
+
+.stat-content {
+  text-align: left; /* Align the text to the left */
+}
+
+.stat-title {
+  margin: 0;
+  font-size: 1em; /* Adjust as needed */
+}
+
+.stat-value {
+  font-size: 2em; /* Adjust as needed */
+  font-weight: bold;
+  margin: 5px 0; /* Adjust as needed */
+}
+.recharts-wrapper {
+  /* Adjust padding as needed */
+  padding: 10px;
+  box-sizing: border-box;
+}
+.graph-container {
+  /* Set the size of the graph's container to fit within your rectangle */
+  width: 100%; /* Adjust if necessary */
+  height: 100%; /* Adjust if necessary */
+}
+.chart-title {
+  margin-bottom: 1px; /* Reduce this value to reduce the space */
+  /* other styles for the title */
+}
+.recharts-wrapper {
+  margin-top: 0px; /* Reduce or remove this value */
+  /* other styles for the chart wrapper */
+}
