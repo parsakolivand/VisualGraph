@@ -277,3 +277,95 @@
   margin-top: 0px; /* Reduce or remove this value */
   /* other styles for the chart wrapper */
 }
+/* Add this to your CSS file */
+.popup {
+  background-color: #fff; /* Match the color to your theme */
+  border: 1px solid #ccc; /* Same border as the other boxes */
+  border-radius: 4px; /* Adjust as needed */
+  padding: 20px; /* Match padding to your other boxes */
+  position: fixed; /* Or absolute, depending on your needs */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Optional shadow */
+  z-index: 10; /* Make sure it's above other elements */
+}
+
+.popup h3 {
+  margin-top: 0;
+  color: #333; /* Match your headings */
+  font-size: 1.5em; /* Match your heading size */
+}
+
+.popup ul {
+  list-style-type: none; /* Style as needed */
+  padding: 0;
+}
+
+.popup li {
+  padding: 5px 0; /* Match list styles to your theme */
+  border-bottom: 1px solid #eee; /* If you have list dividers */
+}
+
+.popup button {
+  background-color: #888; /* Match button colors to your theme */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px; /* Space above the button */
+}
+
+.popup button:hover {
+  background-color: #555; /* Hover effect */
+}
+.graph-container {
+  margin-bottom: 20px; /* Adjust as needed to create space */
+}
+.section.rectangle{
+  margin-bottom: 20px; /* Adjust as needed to create space */
+
+}
+.dropzone {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  border-width: 10px;
+  border-radius: 10px;
+  border-color: #eeeeee;
+  border-style: dashed;
+  background-color: #fafafa;
+  color: #bdbdbd;
+  outline: none;
+  transition: border .24s ease-in-out;
+  cursor: pointer;
+}
+
+.dropzone:hover {
+  border-color: #2196f3;
+}
+
+.files-list {
+  list-style: none;
+}
+
+.files-list li {
+  margin-bottom: 30px;
+}
+
+.button-remove {
+  background-color: #ff1744;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.button-remove:hover {
+  background-color: #f01440;
+}
+
+/* Add more styles as needed */

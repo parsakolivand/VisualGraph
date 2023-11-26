@@ -1,9 +1,13 @@
+
 // src/components/Dashboard.js
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom'; // useNavigate is used in v6+
 import StudentIcon from '../components/Logos/teacherIcon.svg';
 import CourseIcon from '../components/Logos/CoursesIcon.svg';
-import Graphs from './Graphs'; // make sure the path is correct based on your file structure
+import UploadPage from './UploadPage';
+import { Graphs, CourseSpecificGraphs } from './Graphs';
+
+
 
 
 
@@ -13,6 +17,48 @@ const Dashboard = () => {
   const [selectedGraph, setSelectedGraph] = useState(null);
   const [totalStudents, setTotalStudents] = useState(345);
   const [totalCourses, setTotalCourses] = useState(765);
+  const [showUploadPage, setShowUploadPage] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [showCoursePopup, setShowCoursePopup] = useState(false);
+const [selectedCourseGraph, setSelectedCourseGraph] = useState(null);
+const [selectedGraphCourse, setSelectedGraphCourse] = useState('');
+
+
+const handleCourseSelection = (event) => {
+  setSelectedGraphCourse(event.target.value);
+};
+
+
+
+
+
+const courseGraphOptions = [
+  'Grade Distribution for Math',
+  'Grade Distribution for Science',
+  'Grade Distribution for History',
+  'Grade Distribution for Literature',
+
+];
+
+
+const handleCourseGraphSelection = (event) => {
+  setSelectedCourseGraph(event.target.value);
+};
+
+  const showUploadHandler = () => {
+    setShowUploadPage(true);
+  };
+  const navigate = useNavigate(); // useNavigate hook instead of useHistory
+  const handleAdminDetailsClick = () => {
+    // Navigate to the UploadPage
+    navigate('/admin/upload'); // use navigate function instead of history.push
+  };
+  const handleCourseClick = (course) => {
+    setSelectedCourse(course);
+    setShowCoursePopup(true);
+  };
 
   const graphOptions = [
     'Average Grade Over Time Line Graph Math',
@@ -45,8 +91,62 @@ const Dashboard = () => {
 
   // 'teacher' for teacher's role
   // Dummy data for teachers and courses
-  const teachers = ['Teacher 1', 'Teacher 2', 'Teacher 3','teacher 4 ','teacher 5 ','teacher 6 ','teacher 7']; // Replace with real data
-  const courses = ['Course 1', 'Course 2', 'Course 3', 'Course 4', 'Course 5', 'Course 6', 'Course 7']; // Replace with real data
+  const teachers = ['Teacher 1', 'Teacher 2', 'Teacher 3','teacher 4 ','teacher 5 ','teacher 6 ','teacher 7','teacher 9']; // Replace with real data
+  const courses = ['Course 1', 'Course 2', 'Course 3', 'Course 4', 'Course 5', 'Course 6', 'Course 7','Course 8']; // Replace with real data
+  const teacherCourses = {
+    'Teacher 1': ['Course A', 'Course B'],
+    'Teacher 2': ['Course C', 'Course D'],
+    'teacher 9': ['Course C', 'Course D'],
+  
+    // Add other teachers and their courses
+  };
+  const courseDetails = {
+    'Course 1': {
+      teachers: ['Teacher 1', 'Teacher 2'],
+      students: ['Student 1', 'Student 2', 'Student 3']
+    },
+    'Course 4': {
+      teachers: ['Teacher 1', 'Teacher 2'],
+      students: ['Student 1', 'Student 2', 'Student 3']
+    },
+    // ... other courses
+  };
+  const closeCoursePopup = () => setShowCoursePopup(false);
+  const CoursePopup = () => (
+    <div className="popup">
+      <h3>{selectedCourse}</h3>
+      <h4>Teachers</h4>
+      <ul>
+        {courseDetails[selectedCourse]?.teachers.map(teacher => (
+          <li key={teacher}>{teacher}</li>
+        ))}
+      </ul>
+      <h4>Students</h4>
+      <ul>
+        {courseDetails[selectedCourse]?.students.map(student => (
+          <li key={student}>{student}</li>
+        ))}
+      </ul>
+      <button onClick={closeCoursePopup}>Close</button>
+    </div>
+  );
+  const Popup = () => (
+    <div className="popup">
+      <h3>Courses by {selectedTeacher}</h3>
+      <ul>
+        {teacherCourses[selectedTeacher]?.map(course => (
+          <li key={course}>{course}</li>
+        ))}
+      </ul>
+      <button onClick={closePopup}>Close</button>
+    </div>
+  );
+
+  const handleTeacherClick = (teacher) => {
+    setSelectedTeacher(teacher);
+    setShowPopup(true);
+  };
+  const closePopup = () => setShowPopup(false);
 
   const handleSectionClick = (section) => {
     console.log(`Clicked on ${section}`);
@@ -68,7 +168,8 @@ const Dashboard = () => {
           <nav>
             <NavLink to="/admin/data-explore">Data Explore</NavLink>
             <NavLink to="/admin/perspectives">Perspectives</NavLink>
-            <NavLink to="/admin/details">Admin Details</NavLink>
+            <NavLink to="/admin/upload" onClick={handleAdminDetailsClick}>Admin Details</NavLink>
+
           </nav>
         )}
         {userRole === 'teacher' && (
@@ -78,7 +179,19 @@ const Dashboard = () => {
           </nav>
         )}
       </header>
+      
       <main>
+      {showUploadPage ? (
+          <UploadPage />
+        ) : (
+          <div className="content">
+            {/* ... regular dashboard content */}
+            {/* ... */}
+          </div>
+        )}
+
+        {/* Possibly a button or trigger to set `showUploadPage` to true */}
+        
         <div className="content">
             
         <div className="stats-container">
@@ -104,7 +217,8 @@ const Dashboard = () => {
             <div className="scrollable-content">
             <ul>
               {teachers.map(teacher => (
-                <li key={teacher}>{teacher}</li>
+                              <li key={teacher} onClick={() => handleTeacherClick(teacher)}>{teacher}</li>
+
               ))}
             </ul>
             </div>
@@ -114,11 +228,16 @@ const Dashboard = () => {
             <div className="scrollable-content">
             <ul>
               {courses.map(course => (
-                <li key={course}>{course}</li>
-              ))}
+                        <li key={course} onClick={() => handleCourseClick(course)}>{course}</li>
+
+                ))}
             </ul>
             </div>
           </div>
+           {showPopup && <Popup />}
+          {showCoursePopup && <CoursePopup />}
+
+
            <div className="section rectangle" onClick={() => handleSectionClick('choose-graph')}>
             <h2>Choose Graph</h2>
             <select onChange={handleGraphSelection} value={selectedGraph || ''}>
@@ -145,6 +264,34 @@ const Dashboard = () => {
               </div>
             </div>
           )}
+
+            <div className="section rectangle"style={{ marginBottom: '50px'  }}>
+                                      <h2>Course Specific Graph</h2>
+                                      <select onChange={handleCourseSelection} value={selectedGraphCourse || ''}>
+                                        <option value="">Select a course...</option>
+                                        {courses.map(course => (
+                                          <option key={course} value={course}>{course}</option>
+                                        ))}
+                                      </select>
+                                      <select onChange={handleCourseGraphSelection} value={selectedCourseGraph || ''}>
+                                        <option value="">Select a graph...</option>
+                                        {courseGraphOptions.map((graphName) => (
+                                          <option key={graphName} value={graphName}>{graphName}</option>
+                                        ))}
+                                      </select>
+                                      </div>
+                                      
+                                      {selectedCourseGraph && selectedGraphCourse && (
+                                        <div className="section rectangle" style={{ }}>
+                              <h2>Graph for {selectedGraphCourse}: {selectedCourseGraph}</h2>
+                              <div className="graph-content">
+                                <Graphs selectedCourse={selectedGraphCourse} selectedGraphType={selectedCourseGraph} />
+                                <CourseSpecificGraphs selectedCourse={selectedGraphCourse} selectedGraphType={selectedCourseGraph} />
+
+                              </div>
+                            </div>
+                                      )}
+                                   
                              
 
         </div>
